@@ -1,0 +1,37 @@
+type Transfer @entity(immutable: true) {
+  id: Bytes!
+  from: Bytes! # address
+  to: Bytes! # address
+  value: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Relation @entity {
+  id: ID! # id of the relation: sourceAddress + "->" + targetAddress
+  sourceAddress: Bytes! # address
+  targetAddress: Bytes! # address
+  isFriend: Boolean! # both addresses have sent money to one another, therefore the other 2 bools are false
+  isSponsor: Boolean! # only sourceAddress has sent money to targetAddress
+  isBeneficiary: Boolean! # only targetAddress has sent money to sourceAddress
+  valueReceived: BigInt! # how much money targetAddress has sent to sourceAddress
+  valueSent: BigInt! # how much money sourceAddress has sent to targetAddress
+  valueNet: BigInt! # valueReceived - valueSent
+  # timestamps are -1 if they have NOT occured
+  firstIncomeTimestamp: BigInt! # timestamp of the first targetAddress to sourceAddress transaction
+  latestIncomeTimestamp: BigInt! # timestamp of the latest targetAddress to sourceAddress transaction
+  firstExpenditureTimestamp: BigInt! # timestamp of the first sourceAddress to targetAddress transaction
+  latestExpenditureTimestamp: BigInt! # timestamp of the first sourceAddress to targetAddress transaction
+  incomeTransactions: [Bytes!] # list of the transaction hashes when money is received
+  expenditureTransactions: [Bytes!] # list of the transaction hashes where money is sent
+}
+
+type ContactList @entity {
+  id: ID! # if of the contact list
+  address: Bytes! # address of the subject who this contact list is for
+  friends: [Bytes!] # addresses of users this address has mutually traded with
+  sponsors: [Bytes!] # addresses of users this address has only received money from
+  beneficiaries: [Bytes!] # addresses of users this address has only sent money to
+  numberOfFriends: BigInt! # length of friends
+}
