@@ -1,5 +1,6 @@
 # tether-usdt-account-relations
- A subgraph that lets you find all the relations and monetary exchanges of a USDT address. \
+A subgraph that lets you find all the relations and monetary exchanges of a USDT address. \
+This subgraph won first place in the UWaterloo x The Graph Foundation Hackathon of October 2023. \
 Access it here: \
 https://thegraph.com/studio/subgraph/tether-usdt-account-relations/
 
